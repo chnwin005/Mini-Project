@@ -6,27 +6,30 @@ import { ModalProps } from './Manifesto'
 
 
 
-const Confirmation:  React.FC<ModalProps> = ( {candidate}  ) => {
+const Confirmation: React.FC<ModalProps & { onSubmit: () => void }> = ({ candidate, onSubmit, }) => {
+  const handleConfirmVote = () => {
+    onSubmit(); // Invoke the onSubmit callback passed from the parent
+  };
+  
   return (
     <Dialog>
       <DialogTrigger asChild>
-        {/* <Button variant="outline">Vote Now</Button> */}
-        <button className="bg-[#BB2D3B] text-white font-bold py-2 px-4 rounded-md mt-4">Vote Now</button>
+        <Button variant="outline">Vote Now</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle
-          className='text-2xl font-semibold'
+            className='text-2xl font-semibold'
           >
             Vote confirmation
           </DialogTitle>
-            <p>
+          <p>
             You are about to vote for {candidate.firstName} {candidate.lastName} of the {candidate.party} party. Are you sure you want to proceed?
-            </p>
+          </p>
         </DialogHeader>
-        
+
         <DialogFooter>
-          <Button >Yes, I am sure</Button>
+          <Button onClick={handleConfirmVote}>Yes, I am sure</Button>
           <DialogClose asChild>
             <Button type="button" variant="destructive">
               Cancel

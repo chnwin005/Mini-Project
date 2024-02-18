@@ -27,6 +27,7 @@ import useAuthentication from "@/hooks/useAuthentication";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/util/firebase";
 
+
 const provinces = [
     {
         value: "WC",
@@ -62,6 +63,17 @@ const provinces = [
     },
 ];
 
+const validateDisposableEmail = async (email: string): Promise<boolean> => {
+    try {
+      const response = await fetch(`https://disposable.debounce.io/?email=${email}`);
+      const data = await response.json();
+      return data.disposable === "true";
+    } catch (error) {
+      console.error("Error validating disposable email:", error);
+      return false;
+    }
+  };
+
 const formSchema = z
     .object({
         firstName: z.string().min(2, "First name is too short"),
@@ -79,7 +91,10 @@ const formSchema = z
         path: ["passwordConfirm"],
     });
 
+
 export default function Home() {
+
+
 
     useAuthentication();
 
@@ -97,6 +112,8 @@ export default function Home() {
     });
 
     const province = form.watch("province");
+
+
 
     const handleSubmit = async (values: z.infer<typeof formSchema>) => {
 
