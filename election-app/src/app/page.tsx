@@ -200,56 +200,127 @@ const Graphs = () => {
         return { data, options };
     }
 
+
+
     return (
-        <div style={{ paddingTop: '100px' }}> {/* Adjust the padding value as needed */}
-            <h2>Results</h2>
-
-            <p>Total votes: {getTotalVotes()}</p>
-            <h2>Results by Party</h2>
-            {
-                Object.entries(getVotesByParty()).map(([partyId, votes]) => (
-                    <p key={partyId}>Party {partyId}: {votes}</p>
-                ))
-            }
-            <h2>Results by Province</h2>
-            {
-                Object.entries(getVotesByProvince()).map(([province, votes]) => (
-                    <p key={province}>{province}: {votes}</p>
-                ))
-            }
-
-
-            <h2>Results by Party (Percentage)</h2>
-            {
-                Object.entries(getPercentageOfVotesByParty()).map(([partyId, percentage]) => (
-                    <p key={partyId}>Party {partyId}: {percentage.toFixed(2)}%</p>
-                ))
-            }
-
-
-
-
-
-            <Bar data={getBarChartDataAndOptions().data} options={getBarChartDataAndOptions().options} />
-
-            <h2>Results by Party and Province</h2>
-            {
-                Object.entries(getVotesByPartyAndProvince()).map(([partyId, votesByProvince]) => (
-                    <div key={partyId}>
-                        <h3>Party {partyId}</h3>
-                        {
-                            Object.entries(votesByProvince).map(([province, votes]) => (
-                                <p key={province}>{province}: {votes}</p>
-                            ))
-                        }
-                    </div>
-                ))
-            }
-
-            <Bar data={getBarChartDataAndOptionsForStacked().data} options={getBarChartDataAndOptionsForStacked().options} />
+        <div className="flex flex-col items-center gap-4">
+            <div className='flex flex-row'>
+                <div className="w-1/2 mr-4">
+                    <section className='flex flex-row gap-10'>
+                        <section className='border shadow-lg rounded-lg p-4 w-[20rem] flex flex-col gap-1  justify-between '>
+                            <h2 className="text-lg font-semibold"><u>Results</u></h2>
+                            <p className="font-semibold italic">Total votes: {getTotalVotes()}</p>
+                            <h2 className="font-semibold text-m">Votes by Party</h2>
+                            {
+                                Object.entries(getVotesByParty()).map(([partyId, votes]) => (
+                                    <p key={partyId}>Party {partyId}: {votes}</p>
+                                ))
+                            }
+                        </section>
+                        <p><br></br></p>
+                        <section className='border shadow-lg rounded-lg p-4 w-[20rem] flex flex-col gap-1  justify-between'>
+                            <h2 className="text-lg font-semibold"><u>Votes by Province</u></h2>
+                            {
+                                Object.entries(getVotesByProvince()).map(([province, votes]) => (
+                                    <p key={province}>{province}: {votes}</p>
+                                ))
+                            }
+                        </section>
+                    </section>
+                    <p><br></br></p>
+                    <section className='flex flex-row gap-10'>
+                        <section className='border shadow-lg rounded-lg p-4 w-[20rem] h-[20rem] flex flex-col gap-1  justify-between'>
+                            <h2 className="text-lg font-semibold"><u>Votes by Party (Percentage)</u></h2>
+                            {
+                                Object.entries(getPercentageOfVotesByParty()).map(([partyId, percentage]) => (
+                                    <p key={partyId}>Party {partyId}: {percentage.toFixed(2)}%</p>
+                                ))
+                            }
+                        </section>
+                        <p><br></br></p>
+                        <section className='border shadow-lg rounded-lg p-4 w-[20rem] flex flex-col gap-1  justify-between '>
+                            <h2 className="text-lg font-semibold"><u>Votes by Party and Province</u></h2>
+                            {
+                                Object.entries(getVotesByPartyAndProvince()).map(([partyId, votesByProvince]) => (
+                                    <div key={partyId}>
+                                        <h3 className="font-semibold text-m">Party {partyId}:</h3>
+                                        {
+                                            Object.entries(votesByProvince).map(([province, votes]) => (
+                                                <p key={province}>{province}: {votes}</p>
+                                            ))
+                                        }
+                                    </div>
+                                ))
+                            }
+                        </section>
+                    </section>
+                </div>
+                <div className="w-1/2">
+                    <Bar data={getBarChartDataAndOptions().data} options={getBarChartDataAndOptions().options} />
+                    <Bar data={getBarChartDataAndOptionsForStacked().data} options={getBarChartDataAndOptionsForStacked().options} />
+                </div>
+            </div>
         </div>
-    )
+    );
 }
 
 export default Graphs
+
+
+
+
+
+
+//     return (
+//         <div style={{ paddingTop: '100px' }}> {/* Adjust the padding value as needed */}
+//             <h2>Results</h2>
+
+//             <p>Total votes: {getTotalVotes()}</p>
+//             <h2>Results by Party</h2>
+//             {
+//                 Object.entries(getVotesByParty()).map(([partyId, votes]) => (
+//                     <p key={partyId}>Party {partyId}: {votes}</p>
+//                 ))
+//             }
+//             <h2>Results by Province</h2>
+//             {
+//                 Object.entries(getVotesByProvince()).map(([province, votes]) => (
+//                     <p key={province}>{province}: {votes}</p>
+//                 ))
+//             }
+
+
+//             <h2>Results by Party (Percentage)</h2>
+//             {
+//                 Object.entries(getPercentageOfVotesByParty()).map(([partyId, percentage]) => (
+//                     <p key={partyId}>Party {partyId}: {percentage.toFixed(2)}%</p>
+//                 ))
+//             }
+
+
+
+
+
+//             <Bar data={getBarChartDataAndOptions().data} options={getBarChartDataAndOptions().options} />
+
+//             <h2>Results by Party and Province</h2>
+//             {
+//                 Object.entries(getVotesByPartyAndProvince()).map(([partyId, votesByProvince]) => (
+//                     <div key={partyId}>
+//                         <h3>Party {partyId}</h3>
+//                         {
+//                             Object.entries(votesByProvince).map(([province, votes]) => (
+//                                 <p key={province}>{province}: {votes}</p>
+//                             ))
+//                         }
+//                     </div>
+//                 ))
+//             }
+
+//             <Bar data={getBarChartDataAndOptionsForStacked().data} options={getBarChartDataAndOptionsForStacked().options} />
+//         </div>
+//     )
+// }
+
+// export default Graphs
 

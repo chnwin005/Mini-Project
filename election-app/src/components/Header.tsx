@@ -1,5 +1,5 @@
 "use client";
-import { HOME_ROUTE, LOGIN_ROUTE, PROFILE_ROUTE, REGISTER_ROUTE } from "@/constants/routes";
+import { HOME_ROUTE, LOGIN_ROUTE, BALLOT_ROUTE, REGISTER_ROUTE } from "@/constants/routes";
 import { AuthContext } from "@/provider/AuthProvider";
 import { auth } from "@/util/firebase";
 import { signOut } from "firebase/auth";
@@ -20,7 +20,11 @@ const Header = () => {
     return (
         <header className="h-20 z-10 bg-white fixed top-0 w-full flex px-10  border shadow-lg text-white">
             <nav className="w-full mx-auto flex justify-between items-center px-2 text-blue-800 font-poppins text-xl">
-                <Link href={HOME_ROUTE} className="text-4xl font-poppins text-blue-800">RepChoice</Link>
+                <Link href={HOME_ROUTE} className="text-4xl font-poppins text-blue-800 flex items-center gap-3">
+                    <img
+                        src="https://s3.amazonaws.com/logos.brandpa.com/uploads/83d1cd5c90679971289a8ef992879bd6/Choiceelection.png"
+                        className="mx-auto h-20 w-auto" />
+                    RepChoice</Link>
                 <ul className="flex gap-4">
                     {!user?.isLogin &&
                         <>
@@ -30,7 +34,7 @@ const Header = () => {
                     }
                     {user?.isLogin &&
                         <>
-                            <Link href={PROFILE_ROUTE}><li>Profile</li></Link>
+                            <Link href={BALLOT_ROUTE}><li>Vote Here</li></Link>
                             <li className=" cursor-pointer" onClick={logOut}>Logout</li>
                         </>
                     }
