@@ -32,7 +32,7 @@ const Header = () => {
                     {!user?.isLogin &&
                         <>
                             <Link href={LOGIN_ROUTE}><li><button className="bg-white text-blue-500 hover:bg-blue-500 hover:text-white font-bold py-1 px-2 sm:py-2 sm:px-4 rounded-md border border-blue-500">Login</button></li></Link>
-                            <Link href={REGISTER_ROUTE}><li><button className="bg-blue-500 text-white font-bold py-1 px-2 sm:py-2 sm:px-4 rounded-md border border-blue-500">Register</button></li></Link>
+                            <Link href={REGISTER_ROUTE}><li><button className="bg-red-500 text-white font-bold py-1 px-2 sm:py-2 sm:px-4 rounded-md border border-red-500">Register</button></li></Link>
                         </>
                     }
                     {user?.isLogin &&

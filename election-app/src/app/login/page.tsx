@@ -26,7 +26,7 @@ const Login = () => {
         <div className="h-screen flex justify-center items-center bg-[#F5F8FC]">
             <div className="w-1/2 rounded-md bg-white/30 shadow-lg flex justify-between flex-col">
                 <div className="h-28 w-full justify-center flex items-center">
-                    <span className="text-3xl text-black font-mono font-semibold bg-yellow-300 p-3 rounded-lg">Welcome To Login</span>
+                    <span className="text-3xl text-black font-mono font-semibold p-3 rounded-lg text-center">Welcome To Login</span>
                 </div>
                 <form onSubmit={handleSubmit(submitForm)} className="h-full w-1/2 mx-auto ">
                     <InputField
