@@ -113,7 +113,7 @@ export default function Home() {
 
   // Return JSX for rendering
   return (
-    <div className="flex flex-col items-center gap-4 bg-[#F5F8FC] pt-20 pb-10">
+    <div className="flex flex-col items-center gap-4 bg-[#F5F8FC] pt-10 pb-10 sm:pt-20 sm:pb-20">
       <h1 className="text-2xl font-bold mb-4 pt-8">Vote for your future leader</h1>
 
       {voter ? ( // Check if voter is found

@@ -1,7 +1,7 @@
 "use client";
 import SubmitButton from "@/components/Button";
 import InputField from "@/components/InputField";
-import { PROFILE_ROUTE, REGISTER_ROUTE } from "@/constants/routes";
+import { HOME_ROUTE, REGISTER_ROUTE } from "@/constants/routes";
 import Link from "next/link";
 import {auth} from '@/util/firebase';
 import { loginValidation } from "@/validationSchema/auth";
@@ -15,7 +15,7 @@ const Login = () => {
     useAuthentication();
     const submitForm = (values:any) => {
         signInWithEmailAndPassword(auth,values.email,values.password).then((response)=>{
-            router.push(PROFILE_ROUTE);
+            router.push(HOME_ROUTE);
         }).catch((e)=>{
             console.log("Login Error ", e.message);
             alert("Please try Again");

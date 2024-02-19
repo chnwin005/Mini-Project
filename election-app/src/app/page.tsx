@@ -220,71 +220,73 @@ const Graphs = () => {
 
 
     return (
-        <div className="flex flex-col items-center gap-4 bg-[#F5F8FC] pt-40 pb-40 flex-wrap">
-            <div className='flex flex-row'>
-                <div className="w-1/2 mr-4">
-                    <section className='flex flex-row gap-10'>
-                        <section className='border shadow-lg rounded-lg p-4 w-[20rem] flex flex-col gap-1  justify-between '>
-                            <h2 className="text-lg font-semibold"><u>Results</u></h2>
-                            <h3>
-                                Percentage of users voted:
-                                {
-                                    // Calculate the percentage and round to two decimal places
-                                    (Number((votes.length / voters.length * 100).toFixed(2)))
-                                } %
-                            </h3>
-                            <p className="font-semibold italic">Total votes: {getTotalVotes()}</p>
-                            <h2 className="font-semibold text-m">Votes by Party</h2>
-                            {
-                                Object.entries(getVotesByParty()).map(([partyId, votes]) => (
-                                    <p key={partyId}>Party {partyId}: {votes}</p>
-                                ))
-                            }
-                        </section>
-                        <p><br></br></p>
-                        <section className='border shadow-lg rounded-lg p-4 w-[20rem] flex flex-col gap-1  justify-between'>
-                            <h2 className="text-lg font-semibold"><u>Votes by Province</u></h2>
-                            {
-                                Object.entries(getVotesByProvince()).map(([province, votes]) => (
-                                    <p key={province}>{province}: {votes}</p>
-                                ))
-                            }
-                        </section>
-                    </section>
-                    <p><br></br></p>
-                    <section className='flex flex-row gap-10'>
-                        <section className='border shadow-lg rounded-lg p-4 w-[20rem] h-[20rem] flex flex-col gap-1  justify-between'>
-                            <h2 className="text-lg font-semibold"><u>Votes by Party (Percentage)</u></h2>
-                            {
-                                Object.entries(getPercentageOfVotesByParty()).map(([partyId, percentage]) => (
-                                    <p key={partyId}>Party {partyId}: {percentage.toFixed(2)}%</p>
-                                ))
-                            }
-                        </section>
-                        <p><br></br></p>
-                        <section className='border shadow-lg rounded-lg p-4 w-[20rem] flex flex-col gap-1  justify-between '>
-                            <h2 className="text-lg font-semibold"><u>Votes by Party and Province</u></h2>
-                            {
-                                Object.entries(getVotesByPartyAndProvince()).map(([partyId, votesByProvince]) => (
-                                    <div key={partyId}>
-                                        <h3 className="font-semibold text-m">Party {partyId}:</h3>
-                                        {
-                                            Object.entries(votesByProvince).map(([province, votes]) => (
-                                                <p key={province}>{province}: {votes}</p>
-                                            ))
-                                        }
-                                    </div>
-                                ))
-                            }
-                        </section>
-                    </section>
-                </div>
-                <div className="w-1/2">
+      <div className="flex flex-col items-center gap-4 bg-[#F5F8FC] pt-40 pb-40 flex-wrap">
+      <div className='flex flex-col sm:flex-row'>
+          <div className="w-full sm:w-1/2 sm:mr-4">
+              <section className='flex flex-col gap-4 sm:flex-row sm:gap-10'>
+                  <section className='border shadow-lg rounded-lg p-4 w-full sm:w-[20rem] flex flex-col gap-1  justify-between '>
+                      <h2 className="text-lg font-semibold"><u>Results</u></h2>
+                      <h3>
+                          Percentage of users voted:&nbsp;
+                          {
+                              // Calculate the percentage and round to two decimal places
+                              (Number((votes.length / voters.length * 100).toFixed(2)))
+                          } %
+                      </h3>
+                      <p className="font-semibold italic">Total votes: {getTotalVotes()}</p>
+                      <h2 className="font-semibold text-m">Votes by Party</h2>
+                      {
+                          Object.entries(getVotesByParty()).map(([partyId, votes]) => (
+                              <p key={partyId}>Party {partyId}: {votes}</p>
+                          ))
+                      }
+                  </section>
+                  <p className="hidden sm:block"><br></br></p>
+                  <section className='border shadow-lg rounded-lg p-4 w-full sm:w-[20rem] flex flex-col gap-1  justify-between'>
+                      <h2 className="text-lg font-semibold"><u>Votes by Province</u></h2>
+                      {
+                          Object.entries(getVotesByProvince()).map(([province, votes]) => (
+                              <p key={province}>{province}: {votes}</p>
+                          ))
+                      }
+                  </section>
+              </section>
+              <p className="hidden sm:block"><br></br></p>
+              <section className='flex flex-col gap-4 sm:flex-row sm:gap-10'>
+                  <section className='border shadow-lg rounded-lg p-4 w-full sm:w-[20rem] h-[20rem] flex flex-col gap-1  justify-between'>
+                      <h2 className="text-lg font-semibold"><u>Votes by Party (Percentage)</u></h2>
+                      {
+                          Object.entries(getPercentageOfVotesByParty()).map(([partyId, percentage]) => (
+                              <p key={partyId}>Party {partyId}: {percentage.toFixed(2)}%</p>
+                          ))
+                      }
+                  </section>
+                  <p className="hidden sm:block"><br></br></p>
+                  <section className='border shadow-lg rounded-lg p-4 w-full sm:w-[20rem] flex flex-col gap-1  justify-between '>
+                      <h2 className="text-lg font-semibold"><u>Votes by Party and Province</u></h2>
+                      {
+                          Object.entries(getVotesByPartyAndProvince()).map(([partyId, votesByProvince]) => (
+                              <div key={partyId}>
+                                  <h3 className="font-semibold text-m">Party {partyId}:</h3>
+                                  {
+                                      Object.entries(votesByProvince).map(([province, votes]) => (
+                                          <p key={province}>{province}: {votes}</p>
+                                      ))
+                                  }
+                              </div>
+                          ))
+                      }
+                  </section>
+              </section>
+          </div>
+          <div className="w-full sm:w-1/2">
                     <Bar data={getBarChartDataAndOptions().data} options={getBarChartDataAndOptions().options} />
+                    <div className="mt-10 sm:mt-8 lg:mt-12"></div> {/* Add margin between the two graphs */}
                     <Bar data={getBarChartDataAndOptionsForStacked().data} options={getBarChartDataAndOptionsForStacked().options} />
                 </div>
-            </div>
-        </div>
+      </div>
+  </div>
+  
     );
 }
 
