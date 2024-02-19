@@ -1,9 +1,7 @@
 import { Voter } from "./voter";
-
+ 
 export interface Vote {
-    id: string;  
-    voter: Voter
-    candidateId: string; 
-    timestamp: Date; 
-  }
-  
+  vote_id: string;
+  voter: Voter;
+  party_id: string;
+}

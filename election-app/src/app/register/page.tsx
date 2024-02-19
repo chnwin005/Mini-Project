@@ -133,6 +133,7 @@ export default function Home() {
                     email: values.emailAddress,
                     nationalId: values.nationalId,
                     province: values.province,
+                    voted: false,
                 };
 
                 await database.addVoter(voter);

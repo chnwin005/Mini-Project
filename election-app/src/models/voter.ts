@@ -5,4 +5,5 @@ export interface Voter {
     email: string;
     nationalId: string;
     province: string;
+    voted: boolean;
   }

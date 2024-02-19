@@ -17,20 +17,29 @@ import {
     Legend,
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
+import { Voter } from '@/models/voter';
+import candidates from '@/constants/candidates';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 const Graphs = () => {
 
     const [votes, setVotes] = useState<Vote[]>([]);
+    const [voters, setVoters] = useState<Voter[]>([]);
 
     useEffect(() => {
         fetchVotes();
+        fetchVoters();
     }, []);
 
     async function fetchVotes() {
         const votes = await database.getVotes();
         setVotes(votes);
+    }
+
+    async function fetchVoters() {
+        const voters = await database.getVoters();
+        setVoters(voters)
     }
 
     const getTotalVotes = () => {
@@ -88,127 +97,142 @@ const Graphs = () => {
 
     const getBarChartDataAndOptionsForStacked = () => {
         const parties = Object.keys(getVotesByPartyAndProvince());
+        const partyList = parties.map(index => candidates[index]?.party);
         const provinces = new Set(); // Using a set to collect unique provinces
         parties.forEach((partyId) => {
-            Object.keys(getVotesByPartyAndProvince()[partyId]).forEach((province) => {
-                provinces.add(province); // Add province to set
-            });
+          Object.keys(getVotesByPartyAndProvince()[partyId]).forEach((province) => {
+            provinces.add(province); // Add province to set
+          });
         });
         const uniqueProvinces = Array.from(provinces); // Convert set to array
         const colors = [
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 206, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)',
-            'rgba(153, 102, 255, 0.2)',
-            'rgba(255, 159, 64, 0.2)',
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)',
         ]; // Define your own color scheme or use Chart.js built-in color schemes
-
+     
         const colorMap = {}; // Map to store colors for each province
         uniqueProvinces.forEach((province, index) => {
-            colorMap[province] = colors[index % colors.length]; // Assign color to province
+          colorMap[province] = colors[index % colors.length]; // Assign color to province
         });
-
+       
+     
+       
+     
         const data = {
-            labels: parties,
-            datasets: uniqueProvinces.map((province) => ({
-                label: province,
-                data: parties.map((partyId) => getVotesByPartyAndProvince()[partyId][province] || 0), // Fill in 0 for parties with no presence in the province
-                backgroundColor: parties.map((partyId) => colorMap[province]), // Use color from color map
-                borderColor: 'rgba(0, 0, 0, 1)', // Border color for bars
-                borderWidth: 1,
-            })),
+          labels: partyList,
+          datasets: uniqueProvinces.map((province) => ({
+            label: province,
+            data: parties.map((partyId) => getVotesByPartyAndProvince()[partyId][province] || 0), // Fill in 0 for parties with no presence in the province
+            backgroundColor: parties.map((partyId) => colorMap[province]), // Use color from color map
+            borderColor: 'rgba(0, 0, 0, 1)', // Border color for bars
+            borderWidth: 1,
+          })),
         };
-
+     
         const options = {
-            scales: {
-                x: {
-                    stacked: true,
-                },
-                y: {
-                    stacked: true,
-                },
+          scales: {
+            x: {
+              stacked: true,
             },
-            plugins: {
-                tooltip: {
-                    callbacks: {
-                        label: function (context) {
-                            const totalVotes = getTotalVotes();
-                            const dataIndex = context.dataIndex;
-                            const value = context.dataset.data[dataIndex];
-                            const percentage = ((value / totalVotes) * 100).toFixed(2);
-                            return `${context.dataset.label}: ${value} (${percentage}%)`;
-                        }
-                    }
+            y: {
+              stacked: true,
+            },
+          },
+          plugins: {
+            tooltip: {
+              callbacks: {
+                label: function (context) {
+                  const totalVotes = getTotalVotes();
+                  const dataIndex = context.dataIndex;
+                  const value = context.dataset.data[dataIndex];
+                  const percentage = ((value / totalVotes) * 100).toFixed(2);
+                  return `${context.dataset.label}: ${value} (${percentage}%)`;
                 }
+              }
             }
+          }
         };
-
+     
         return { data, options };
-    };
-
-
-    const getBarChartDataAndOptions = () => {
+      };
+     
+     
+      const getBarChartDataAndOptions = () => {
+        const parties = Object.keys(getVotesByParty());
+        const partyList = parties.map(index => candidates[index]?.party);
+        console.log(partyList);
+     
         const data = {
-            labels: Object.keys(getVotesByParty()),
-            datasets: [
-                {
-                    label: 'Votes by Party',
-                    data: Object.values(getVotesByParty()),
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)',
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)',
-                    ],
-                    borderWidth: 1,
-                },
-            ],
-        };
-
-        const options = {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
+          labels: partyList,
+          datasets: [
+            {
+              label: 'Votes by Party',
+              data: Object.values(getVotesByParty()),
+              backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+              ],
+              borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)',
+              ],
+              borderWidth: 1,
             },
-            plugins: {
-                tooltip: {
-                    callbacks: {
-                        label: function (context) {
-                            const totalVotes = getTotalVotes();
-                            const dataIndex = context.dataIndex;
-                            const value = context.dataset.data[dataIndex];
-                            const percentage = ((value / totalVotes) * 100).toFixed(2);
-                            return `${context.dataset.label}: ${value} (${percentage}%)`;
-                        }
-                    }
-                }
-            }
+          ],
         };
-
+     
+        const options = {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          },
+          plugins: {
+            tooltip: {
+              callbacks: {
+                label: function (context) {
+                  const totalVotes = getTotalVotes();
+                  const dataIndex = context.dataIndex;
+                  const value = context.dataset.data[dataIndex];
+                  const percentage = ((value / totalVotes) * 100).toFixed(2);
+                  return `${context.dataset.label}: ${value} (${percentage}%)`;
+                }
+              }
+            }
+          }
+        };
+     
         return { data, options };
-    }
-
+      }
+    
 
 
     return (
-        <div className="flex flex-col items-center gap-4">
+        <div className="flex flex-col items-center gap-4 bg-[#F5F8FC] pt-40 pb-40 flex-wrap">
             <div className='flex flex-row'>
                 <div className="w-1/2 mr-4">
                     <section className='flex flex-row gap-10'>
                         <section className='border shadow-lg rounded-lg p-4 w-[20rem] flex flex-col gap-1  justify-between '>
                             <h2 className="text-lg font-semibold"><u>Results</u></h2>
+                            <h3>
+                                Percentage of users voted:
+                                {
+                                    // Calculate the percentage and round to two decimal places
+                                    (Number((votes.length / voters.length * 100).toFixed(2)))
+                                } %
+                            </h3>
                             <p className="font-semibold italic">Total votes: {getTotalVotes()}</p>
                             <h2 className="font-semibold text-m">Votes by Party</h2>
                             {

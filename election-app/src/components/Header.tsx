@@ -24,7 +24,7 @@ const Header = () => {
                     <img
                         src="https://s3.amazonaws.com/logos.brandpa.com/uploads/83d1cd5c90679971289a8ef992879bd6/Choiceelection.png"
                         className="mx-auto h-20 w-auto" />
-                    RepChoice</Link>
+                    ChoiceElection</Link>
                 <ul className="flex gap-4">
                     {!user?.isLogin &&
                         <>
@@ -34,8 +34,8 @@ const Header = () => {
                     }
                     {user?.isLogin &&
                         <>
-                            <Link href={BALLOT_ROUTE}><li>Vote Here</li></Link>
-                            <li className=" cursor-pointer" onClick={logOut}>Logout</li>
+                            <Link href={BALLOT_ROUTE} className="bg-red-500 text-white font-bold py-2 px-4 rounded-md"><li>Vote Here</li></Link>
+                            <li className=" cursor-pointer border border-blue-500 text-blue-500 px-4 py-2 rounded-md hover:bg-blue-500 hover:text-white" onClick={logOut}>Logout</li>
                         </>
                     }
                 </ul>

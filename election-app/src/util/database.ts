@@ -62,6 +62,7 @@ class Database {
         // Add a new document with a generated ID
         try {
             const voteRef = await addDoc(collection(db, 'votes'), vote);
+            
             console.log('Vote document added with ID: ', voteRef.id);
         } catch (error) {
             console.error('Error adding vote document: ', error);

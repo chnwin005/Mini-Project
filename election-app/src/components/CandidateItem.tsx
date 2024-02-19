@@ -27,15 +27,15 @@ const Candidate = ({ id, label, checked, onChange, candidate }: CandidateProps) 
             <section>
                 <Avatar
                 className='w-20 h-20'>
-                    <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-                    <AvatarFallback>CN</AvatarFallback>
+                    <AvatarImage src={candidate.profileImage} alt="@shadcn" />
+                    <AvatarFallback>USER</AvatarFallback>
                 </Avatar>
                 <span className="text-lg font-semibold">{candidate.firstName} {candidate.lastName}</span>
             </section>
             <section>
                 <Avatar>
-                    <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-                    <AvatarFallback>CN</AvatarFallback>
+                    <AvatarImage src={candidate.partyLogo} alt="@shadcn" />
+                    <AvatarFallback>Logo</AvatarFallback>
                 </Avatar>
                 <span className="text-sm font-semibold">{candidate.party}</span>
             </section>
