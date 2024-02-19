@@ -1,4 +1,4 @@
-import { LOGIN_ROUTE, PROFILE_ROUTE, REGISTER_ROUTE } from "@/constants/routes";
+import { LOGIN_ROUTE, HOME_ROUTE, REGISTER_ROUTE } from "@/constants/routes";
 import { AuthContext } from "@/provider/AuthProvider";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
@@ -12,11 +12,11 @@ const useAuthentication = () => {
 
     useEffect(()=>{
         if(!userInfo && !GUEST_ROUTES.includes(currentRoute)){
-            router.push(LOGIN_ROUTE)
+            // router.push(LOGIN_ROUTE)
         }
 
         if(userInfo && GUEST_ROUTES.includes(currentRoute)){
-            router.push(PROFILE_ROUTE);
+            // router.push(HOME_ROUTE);
         }
     },[]);
 

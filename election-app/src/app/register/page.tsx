@@ -26,6 +26,8 @@ import { Voter } from "@/models/voter";
 import useAuthentication from "@/hooks/useAuthentication";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/util/firebase";
+import { useRouter } from "next/navigation";
+import { BALLOT_ROUTE, HOME_ROUTE } from "@/constants/routes";
 
 
 const provinces = [
@@ -103,6 +105,7 @@ export default function Home() {
 
 
     useAuthentication();
+    const router = useRouter();
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -138,9 +141,9 @@ export default function Home() {
 
                 await database.addVoter(voter);
 
-                alert("User Register Successfully");
+                alert("User Registered Successfully");
                 // reset();
-                // router.push(PROFILE_ROUTE);
+                router.push(HOME_ROUTE);
             })
             .catch(e => {
                 console.log("catch ", e.message);

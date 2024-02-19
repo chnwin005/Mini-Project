@@ -83,25 +83,43 @@ export default function Home() {
 
   // Function to handle checkbox change
   const handleChange = (id: string) => {
-    setCheckedId(id);
+    setCheckedId(prevId => {
+      return id; // Return the new state
+    });
+
+    // console.log(checkedId);
+    // console.log(candidates[parseInt(id) - 1]);
+    // const selectedCandidateIndex = candidates.findIndex(candidate => candidate.id === checkedId);
+    // console.log(candidates[selectedCandidateIndex])
   };
   // Define candidate data
 
   const handleSubmit = async () => {
     const selectedCandidateIndex = candidates.findIndex(candidate => candidate.id === checkedId);
+    let realIndex = selectedCandidateIndex - 1;
+
+    if (realIndex < 0) {
+      realIndex = 0;
+    } else {
+      realIndex += 1;
+    }
+    console.log(realIndex)
     const thisVoter = voter;
     const vote: Vote = {
       // party id is a string
-      party_id: candidates[selectedCandidateIndex].id,
+      party_id: realIndex.toString(),
       voter: thisVoter,
       // get random 6 digit
       vote_id: `v_${Math.floor(100000 + Math.random() * 900000)}`
+      
     }
+
+    console.log(vote);
 
     try {
       await database.addVote(vote);
       console.log('Vote added: ', vote);
-      alert('Succesfully');
+      alert('Succesful');
       router.push(HOME_ROUTE);
     } catch (error) {
       console.error('Error adding vote: ', error);
